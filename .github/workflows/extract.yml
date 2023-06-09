@@ -1,0 +1,52 @@
+name: Extract Rom
+on:
+  schedule:
+    - cron:  '0 4 * * *'
+  workflow_dispatch:
+      inputs:
+      ota:
+        description: 'OTA'
+        required: true
+
+jobs:
+  build:
+    name: Rom extract
+    runs-on: ubuntu-latest
+    env:
+      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
+      CCACHE_NOHASHDIR: "true"
+      CCACHE_HARDLINK: "true"
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup rom extract environment
+      run: |
+        echo "BUILD_TIME=$(TZ=Asia/Kuala_Lumpur date "+%Y %m %d %H,%M")" >> $GITHUB_ENV
+        sudo apt-get update
+        sudo apt-get install libarchive-tools git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3 aria2 arj brotli cabextract cmake device-tree-compiler gcc g++ git liblz4-tool liblzma-dev libtinyxml2-dev lz4 mpack openjdk-11-jdk p7zip-full p7zip-rar python3 python3-pip rar sharutils unace unrar unzip uudeview xz-utils zip zlib1g-dev
+        mkdir -p $GITHUB_WORKSPACE/extracta_workspace
+
+    - name: Download Atools
+      run: |
+        cd $GITHUB_WORKSPACE/extract_workspace
+        git clone https://github.com/rajkale99/atools atools
+        
+    - name: Download 
+      run: |
+        cd $GITHUB_WORKSPACE/extract_workspace
+        curl -L ${{ inputs.ota }} -o ota.zip
+
+    - name: Extract rom
+      run: |
+        cd $GITHUB_WORKSPACE/extract_workspace/atools
+        bash tools/rom_extract.sh $GITHUB_WORKSPACE/extract_workspace/ota.zip
+
+    - name: Zip final product
+      run: |
+        zip -r $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/* $GITHUB_WORKSPACE/extract_workspace/final.zip
+
+    - name: Upload Image
+      uses: actions/upload-artifact@v3
+      with:
+        name: final release
+        path: extract_workspace/final.zip

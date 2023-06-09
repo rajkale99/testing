@@ -43,14 +43,10 @@ jobs:
         cd $GITHUB_WORKSPACE/extract_workspace/atools
         bash tools/rom_extract.sh $GITHUB_WORKSPACE/extract_workspace/ota.zip
 
-    - name: Zip final product
-      run: |
-        zip -r $GITHUB_WORKSPACE/extract_workspace/final.zip $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/*
-
     - name: Upload release assets
       uses: ncipollo/release-action@v1
       with:
-        artifacts: extract_workspace/final.zip
+        artifacts: extract_workspace/atools/dumps/ota
         artifactErrorsFailBuild: true
         body: ${{ inputs.ota }}
         tag: releasef

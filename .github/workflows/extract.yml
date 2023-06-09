@@ -50,7 +50,7 @@ jobs:
     - name: Upload release assets
       uses: ncipollo/release-action@v1
       with:
-        artifacts: $GITHUB_WORKSPACE/final.zip
+        artifacts: extract_workspace/final.zip
         artifactErrorsFailBuild: true
         body: ${{ inputs.ota }}
         tag: ${{ steps.download.outputs.ota_ver }}

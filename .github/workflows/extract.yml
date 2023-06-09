@@ -32,7 +32,7 @@ jobs:
     - name: Download 
       run: |
         cd $GITHUB_WORKSPACE/extract_workspace
-        curl -L ${{ inputs.ota }} -o ota.zip
+        curl -L "https://gauss-componentotacostmanual-sg.allawnofs.com/remove-8195d15bd317bad3b30f7c9d3b53492c/component-ota/23/04/13/9c77268bc0df49e484c863d8227a63c8.zip" -o ota.zip
 
     - name: Extract ROM
       run: |

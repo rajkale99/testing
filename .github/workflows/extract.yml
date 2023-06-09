@@ -1,7 +1,5 @@
 name: Extract Rom
 on:
-  schedule:
-    - cron:  '0 4 * * *'
   workflow_dispatch:
       inputs:
       ota:
@@ -10,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Rom extract
+    name: Rom Extract
     runs-on: ubuntu-latest
     env:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
@@ -36,7 +34,7 @@ jobs:
         cd $GITHUB_WORKSPACE/extract_workspace
         curl -L ${{ inputs.ota }} -o ota.zip
 
-    - name: Extract rom
+    - name: Extract ROM
       run: |
         cd $GITHUB_WORKSPACE/extract_workspace/atools
         bash tools/rom_extract.sh $GITHUB_WORKSPACE/extract_workspace/ota.zip
@@ -45,7 +43,7 @@ jobs:
       run: |
         zip -r $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/* $GITHUB_WORKSPACE/extract_workspace/final.zip
 
-    - name: Upload Image
+    - name: Upload ROM 
       uses: actions/upload-artifact@v3
       with:
         name: final release

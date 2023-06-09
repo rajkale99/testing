@@ -7,7 +7,7 @@ on:
         required: true
 
 jobs:
-  build:
+  dump:
     name: Rom Extract
     runs-on: ubuntu-latest
     env:

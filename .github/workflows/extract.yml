@@ -49,5 +49,5 @@ jobs:
         artifacts: extract_workspace/atools/dumps/ota
         artifactErrorsFailBuild: true
         body: ${{ inputs.ota }}
-        tag: releasef
+        tag: releaseg
         token: ${{ secrets.GITHUB_TOKEN }}

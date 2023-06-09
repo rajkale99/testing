@@ -1,4 +1,5 @@
 name: Extract Rom
+
 on:
   workflow_dispatch:
       inputs:

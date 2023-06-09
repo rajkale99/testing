@@ -43,7 +43,7 @@ jobs:
 
     - name: Zip final product
       run: |
-        zip -r $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/* $GITHUB_WORKSPACE/extract_workspace/final.zip
+        zip -r $GITHUB_WORKSPACE/extract_workspace/final.zip $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/*
 
     - name: Upload ROM 
       uses: actions/upload-artifact@v3

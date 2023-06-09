@@ -34,7 +34,8 @@ jobs:
     - name: Download 
       run: |
         cd $GITHUB_WORKSPACE/extract_workspace
-        curl -L "https://gauss-componentotacostmanual-sg.allawnofs.com/remove-8195d15bd317bad3b30f7c9d3b53492c/component-ota/23/04/13/9c77268bc0df49e484c863d8227a63c8.zip" -o ota.zip
+        curl -L ${{ inputs.ota }} -o ota.zip
+        echo ::set-output name=ota_ver::`unzip -p ota.zip META-INF/com/android/metadata | grep ^version_name= | cut -b 14-`
 
     - name: Extract ROM
       run: |
@@ -45,8 +46,11 @@ jobs:
       run: |
         zip -r $GITHUB_WORKSPACE/extract_workspace/final.zip $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/*
 
-    - name: Upload ROM 
-      uses: actions/upload-artifact@v3
+    - name: Upload release assets
+      uses: ncipollo/release-action@v1
       with:
-        name: final release
-        path: extract_workspace/final.zip
+        artifacts: $GITHUB_WORKSPACE/final.zip
+        artifactErrorsFailBuild: true
+        body: ${{ inputs.ota }}
+        tag: ${{ steps.download.outputs.ota_ver }}
+        token: ${{ secrets.GITHUB_TOKEN }}

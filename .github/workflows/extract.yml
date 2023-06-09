@@ -53,5 +53,5 @@ jobs:
         artifacts: extract_workspace/final.zip
         artifactErrorsFailBuild: true
         body: ${{ inputs.ota }}
-        tag: ${{ steps.download.outputs.ota_ver }}
+        tag: releasef
         token: ${{ secrets.GITHUB_TOKEN }}

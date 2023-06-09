@@ -36,8 +36,8 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/extract_workspace
         curl -L ${{ inputs.ota }} -o ota.zip
-        echo ::set-output name=ota_ver::`unzip -p ota.zip META-INF/com/android/metadata | grep ^version_name= | cut -b 14-`
-
+        echo {ota_ver}=`unzip -p ota.zip META-INF/com/android/metadata | grep ^version_name= | cut -b 14-` >> $GITHUB_OUTPUT
+        
     - name: Extract ROM
       run: |
         cd $GITHUB_WORKSPACE/extract_workspace/atools

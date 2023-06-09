@@ -2,7 +2,7 @@ name: Extract Rom
 
 on:
   workflow_dispatch:
-      inputs:
+    inputs:
       ota:
         description: 'OTA'
         required: true

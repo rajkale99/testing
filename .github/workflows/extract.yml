@@ -15,12 +15,12 @@ jobs:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
       CCACHE_NOHASHDIR: "true"
       CCACHE_HARDLINK: "true"
-      token: ${{ secrets.GIT_TOKEN }}
+      token: ${{ secrets.LAB_TOKEN }}
     steps:
     - uses: actions/checkout@v3
       with:
         lfs: true
-        token: ${{ secrets.GIT_TOKEN }}
+        token: ${{ secrets.LAB_TOKEN }}
         
     - name: Setup rom extract environment
       run: |
@@ -49,7 +49,7 @@ jobs:
         
     - name: Push Extracted
       run: |
-        echo ${{ secrets.GIT_TOKEN }}
+        echo ${{ secrets.LAB_TOKEN }}
         cd $GITHUB_WORKSPACE/extract_workspace/atools
-        export GIT_TOKEN=${{ secrets.GIT_TOKEN }}
+        export LAB_TOKEN=${{ secrets.LAB_TOKEN }}
         bash tools/dump_push.sh $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/

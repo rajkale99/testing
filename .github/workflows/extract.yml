@@ -53,9 +53,3 @@ jobs:
         cd $GITHUB_WORKSPACE/extract_workspace/atools
         export GIT_TOKEN=${{ secrets.GIT_TOKEN }}
         bash tools/dump_push.sh $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/
- 
-    - name: Upload ROM 
-      uses: actions/upload-artifact@v3
-      with:
-        name: final release
-        path: extract_workspace/final.zip

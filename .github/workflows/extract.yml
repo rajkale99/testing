@@ -30,7 +30,6 @@ jobs:
         pip3 install backports.lzma docopt pycrypto zstandard
         pip3 install --force-reinstall -v "protobuf==3.20.0"
         mkdir -p $GITHUB_WORKSPACE/extract_workspace
-
     - name: Download Atools
       run: |
         cd $GITHUB_WORKSPACE/extract_workspace

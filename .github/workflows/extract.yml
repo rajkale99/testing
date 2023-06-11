@@ -48,7 +48,7 @@ jobs:
         
     - name: Push Extracted
       run: |
-        echo ${{ secrets.GIT_TOKEN }}
+        echo ${{ secrets.LAB_TOKEN }}
         cd $GITHUB_WORKSPACE/extract_workspace/atools
-        export GIT_TOKEN=${{ secrets.GIT_TOKEN }}
+        export LAB_TOKEN=${{ secrets.LAB_TOKEN }}
         bash tools/dump_push.sh $GITHUB_WORKSPACE/extract_workspace/atools/dumps/ota/
